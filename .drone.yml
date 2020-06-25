@@ -13,7 +13,7 @@ steps:
     dockerfile: Dockerfile
     repo: linutux/unbound
     registry: hub.docker.com
-    user:
+    username:
       from_secret: docker_username
     auth:
       from_secret: docker_token
