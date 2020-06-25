@@ -1,9 +1,34 @@
 kind: pipeline
-name: default
+name: default-arm64
 
 platform:
   os: linux
   arch: arm64
+
+steps:
+- name: build
+  image: plugins/docker
+  settings:
+    dockerfile: Dockerfile
+    repo: linutux/unbound
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+
+trigger:
+  branch:
+  - master
+  event:
+  - push
+
+---
+kind: pipeline
+name: default-amd64
+
+platform:
+  os: linux
+  arch: amd64
 
 steps:
 - name: build
