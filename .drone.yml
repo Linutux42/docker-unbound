@@ -68,3 +68,16 @@ steps:
     platforms:
       - linux/arm64
       - linux/amd64
+
+- name: manifest-latest
+  image: plugins/manifest
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    target: linutux/unbound:latest
+    template: linutux/unbound:0.0.1-OS-ARCH
+    platforms:
+      - linux/arm64
+      - linux/amd64
