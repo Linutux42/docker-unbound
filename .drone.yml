@@ -1,4 +1,8 @@
+global_variables:
+  unbound_tag: &unbound_tag 0.0.1
+
 kind: pipeline
+type: docker
 name: default-arm64
 
 platform:
@@ -10,6 +14,7 @@ steps:
   image: plugins/docker
   settings:
     dockerfile: Dockerfile
+    tags: [latest, *unbound_tag]
     repo: linutux/unbound
     username:
       from_secret: docker_username
@@ -24,6 +29,7 @@ trigger:
 
 ---
 kind: pipeline
+type: docker
 name: default-amd64
 
 platform:
@@ -35,6 +41,7 @@ steps:
   image: plugins/docker
   settings:
     dockerfile: Dockerfile
+    tags: [latest, *unbound_tag]
     repo: linutux/unbound
     username:
       from_secret: docker_username
