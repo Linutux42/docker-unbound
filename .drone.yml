@@ -58,7 +58,8 @@ trigger:
   - push
 ---
 global_variables:
-  unbound_tag: &unbount_tag 0.0.1
+  unbound_tag: &unbound_tag 0.0.1
+
 kind: pipeline
 type: docker
 name: manifest
