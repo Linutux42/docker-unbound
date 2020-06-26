@@ -1,4 +1,4 @@
-image: linutux/unbound:{{#if build.tag}}{{trimPrefix "v" build.tag}}{{else}}latest{{/if}}
+image: linutux/unbound:latest
 {{#if build.tags}}
 tags:
 {{#each build.tags}}
