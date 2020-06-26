@@ -1,5 +1,5 @@
 global_variables:
-  unbound_tag: &unbound_tag 0.0.1
+  unbound_tag: &unbound_tag 0.0.1-linux-arm64
 
 kind: pipeline
 type: docker
@@ -14,7 +14,7 @@ steps:
   image: plugins/docker
   settings:
     dockerfile: Dockerfile
-    tags: !concat [*unbound_tag, "-linux-arm64"]
+    tags: *unbound_tag
     repo: linutux/unbound
     username:
       from_secret: docker_username
@@ -29,7 +29,7 @@ trigger:
 
 ---
 global_variables:
-  unbound_tag: &unbound_tag 0.0.1
+  unbound_tag: &unbound_tag 0.0.1-linux-amd64
 
 kind: pipeline
 type: docker
@@ -44,7 +44,7 @@ steps:
   image: plugins/docker
   settings:
     dockerfile: Dockerfile
-    tags: !concat [*unbound_tag, "-linux-amd64"]
+    tags: *unbound_tag
     repo: linutux/unbound
     username:
       from_secret: docker_username
