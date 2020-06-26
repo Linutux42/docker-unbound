@@ -3,6 +3,28 @@ global_variables:
 
 kind: pipeline
 type: docker
+name: manifest
+
+steps:
+- name: manifest
+  image: plugins/manifest
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    target: linutux/unbound:*unbound_tag
+    template: linutux/unbound:*unbound_tag-OS-ARCH
+    platforms:
+      - linux/amd64
+      - linux/arm64
+
+---
+global_variables:
+  unbound_tag: &unbound_tag 0.0.1
+
+kind: pipeline
+type: docker
 name: default-arm64
 
 platform:
