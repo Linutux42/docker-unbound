@@ -70,4 +70,4 @@ steps:
     password:
       from_secret: docker_password
     spec: manifest.tmpl
-      tags: latest
+    tags: latest
