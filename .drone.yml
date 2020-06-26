@@ -11,7 +11,7 @@ steps:
   image: plugins/docker
   settings:
     dockerfile: Dockerfile
-    tags: 0.0.1-linux-arm64
+    tags: 1.9.0-linux-arm64
     repo: linutux/unbound
     username:
       from_secret: docker_username
@@ -38,7 +38,7 @@ steps:
   image: plugins/docker
   settings:
     dockerfile: Dockerfile
-    tags: 0.0.1-linux-amd64
+    tags: 1.9.0-linux-amd64
     repo: linutux/unbound
     username:
       from_secret: docker_username
@@ -63,8 +63,8 @@ steps:
       from_secret: docker_username
     password:
       from_secret: docker_password
-    target: linutux/unbound:0.0.1
-    template: linutux/unbound:0.0.1-OS-ARCH
+    target: linutux/unbound:1.9.0
+    template: linutux/unbound:1.9.0-OS-ARCH
     platforms:
       - linux/arm64
       - linux/amd64
@@ -77,7 +77,7 @@ steps:
     password:
       from_secret: docker_password
     target: linutux/unbound:latest
-    template: linutux/unbound:0.0.1-OS-ARCH
+    template: linutux/unbound:1.9.0-OS-ARCH
     platforms:
       - linux/arm64
       - linux/amd64
