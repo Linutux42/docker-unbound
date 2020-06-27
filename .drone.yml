@@ -68,6 +68,7 @@ steps:
     platforms:
       - linux/arm64
       - linux/amd64
+    ignore-missing: true
 
 - name: manifest-latest
   image: plugins/manifest
@@ -81,3 +82,9 @@ steps:
     platforms:
       - linux/arm64
       - linux/amd64
+    ignore-missing: true
+---
+kind: signature
+hmac: 341f1e89a6709fcd429f68500f4c1fa9543f54ac05684d26ece221e2ad0c488a
+
+...
