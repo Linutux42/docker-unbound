@@ -1,4 +1,9 @@
 #!/bin/sh
+set -m
+
+/bin/bash /unbound-ads-refresh.sh
+
+service cron start
 
 /usr/sbin/unbound -v -c /etc/unbound/unbound.conf
 
