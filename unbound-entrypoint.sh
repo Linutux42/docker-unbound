@@ -1,7 +1,7 @@
 #!/bin/sh
 set -m
 
-/bin/bash /unbound-ads-refresh.sh
+/bin/bash /unbound-refresher.sh
 
 service cron start
 

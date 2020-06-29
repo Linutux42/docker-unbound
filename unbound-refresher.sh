@@ -13,15 +13,22 @@ _malwaredom="https://mirror1.malwaredomains.com/files/justdomains"
 _stevenblack="https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
 _zeustracker="https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist"
 
+# Root hints from internic
+_roothints="https://www.internic.net/domain/named.root"
+
 # Global variables
 _tmpfile="$(mktemp)" && echo '' > $_tmpfile
-_unboundconf="/etc/unbound/unbound.conf.d/unbound-adhosts.conf"
+_basedir="/etc/unbound"
+_unboundconf="${_basedir}/unbound.conf.d/unbound-adhosts.conf"
 
 # Remove comments from blocklist
 function simpleParse {
   curl -s $1 | \
   sed -e 's/#.*$//' -e '/^[[:space:]]*$/d' >> $2
 }
+
+# Make sure folder unbound.conf.d exists
+[[ ! -d "${_basedir}/unbound.conf.d" ]] && mkdir ${_basedir}/unbound.conf.d
 
 # Parse MalwareDom
 [[ -n ${_malwaredom+x} ]] && simpleParse $_malwaredom $_tmpfile
@@ -54,6 +61,9 @@ sort -fu $_tmpfile | grep -v "^[[:space:]]*$" | \
 awk '{
 print "local-zone: \"" $1 "\" static"
 }' > $_unboundconf && rm -f $_tmpfile
+
+# Download latest root.hints
+curl -so /data/root.hints $_roothints
 
 exit 0
 #EOF
