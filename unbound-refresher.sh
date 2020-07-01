@@ -63,7 +63,10 @@ print "local-zone: \"" $1 "\" static"
 }' > $_unboundconf && rm -f $_tmpfile
 
 # Download latest root.hints
-curl -so /data/root.hints $_roothints
+curl -so ${_basedir}/root.hints $_roothints
+
+# Update DNSSEC root key
+unbound-anchor -a "${_basedir}/root.key"
 
 exit 0
 #EOF
