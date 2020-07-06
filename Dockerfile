@@ -12,7 +12,4 @@ RUN apt-get update \
 
 VOLUME /etc/unbound
 
-EXPOSE 53/tcp
-EXPOSE 53/udp
-
 ENTRYPOINT [ "sh", "/unbound-entrypoint.sh" ]
