@@ -68,7 +68,7 @@ print "local-zone: \"" $1 "\" static"
 curl -so ${_basedir}/root.hints $_roothints
 
 # Update DNSSEC root key
-unbound-anchor -a "${_basedir}/root.key"
+unbound-anchor -v
 
 exit 0
 #EOF
