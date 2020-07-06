@@ -57,10 +57,12 @@ function simpleParse {
   awk '/^127.0.0.1/ { print $2 }' >> $_tmpfile
 
 # Create unbound(8) local zone file
-sort -fu $_tmpfile | grep -v "^[[:space:]]*$" | \
+echo 'server:' > $_unboundconf && \
+  sort -fu $_tmpfile | \
+  grep -v "^[[:space:]]*$" | \
 awk '{
 print "local-zone: \"" $1 "\" static"
-}' > $_unboundconf && rm -f $_tmpfile
+}' >> $_unboundconf && rm -f $_tmpfile
 
 # Download latest root.hints
 curl -so ${_basedir}/root.hints $_roothints
