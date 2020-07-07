@@ -54,7 +54,7 @@ function simpleParse {
 
 # Parse StevenBlack
 [[ -n ${_stevenblack+x} ]] && \
-  echo "Downloading and parsing ${1} ... " && \
+  echo "Downloading and parsing ${_stevenblack} ... " && \
   curl -s $_stevenblack | \
   sed -n '/Start/,$p' | \
   sed -e 's/#.*$//' -e '/^[[:space:]]*$/d' | \
@@ -63,7 +63,7 @@ function simpleParse {
 
 # Parse hpHosts
 [[ -n ${_hostfiles+x} ]] && \
-  echo "Downloading and parsing ${1} ... " && \
+  echo "Downloading and parsing ${_hostfiles} ... " && \
   curl -s $_hostfiles | \
   sed -n '/START/,$p' | tr -d '^M$' | \
   sed -e 's/#.*$//' -e '/^[[:space:]]*$/d' -e 's/$//' | \
