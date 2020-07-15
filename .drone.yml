@@ -11,8 +11,8 @@ steps:
 - name: get-version
   image: debian:buster-slim
   commands:
-  - UNBOUND=$(apt-cache policy | sed -n -e 's/^.*Candidate: //p' | cut -d'-' -f1)
-  - echo ${UNBOUND},latest > .tags
+  - "UNBOUND=$(apt-cache policy | sed -n -e 's/^.*Candidate: //p' | cut -d'-' -f1)"
+  - "echo ${UNBOUND},latest > .tags"
 - name: build
   image: plugins/docker
   settings:
@@ -30,6 +30,6 @@ trigger:
   - push
 ---
 kind: signature
-hmac: 24b51d41f2436eb297f3fb9bc0ce217434a068416d87080f8c2d236c8984b01c
+hmac: 5a02a0be02176f675588c9124f93eb3b288dc6bf17829e6c273a7d173a497a3a
 
 ...
