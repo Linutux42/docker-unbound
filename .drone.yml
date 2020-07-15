@@ -8,11 +8,15 @@ platform:
   arch: arm64
 
 steps:
+- name: get-version
+  image: debian:buster-slim
+  commands:
+  - UNBOUND=$(apt-cache policy | sed -n -e 's/^.*Candidate: //p' | cut -d'-' -f1)
+  - echo ${UNBOUND},latest > .tags
 - name: build
   image: plugins/docker
   settings:
     dockerfile: Dockerfile
-    tags: 1.9.0-linux-arm64
     repo: linutux/unbound
     username:
       from_secret: docker_username
@@ -24,70 +28,8 @@ trigger:
   - master
   event:
   - push
-
----
-kind: pipeline
-type: docker
-name: default-amd64
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: build
-  image: plugins/docker
-  settings:
-    dockerfile: Dockerfile
-    tags: 1.9.0-linux-amd64
-    repo: linutux/unbound
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-
-trigger:
-  branch:
-  - master
-  event:
-  - push
----
-kind: pipeline
-type: docker
-name: manifest
-
-steps:
-- name: manifest
-  image: plugins/manifest
-  settings:
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    target: linutux/unbound:1.9.0
-    template: linutux/unbound:1.9.0-OS-ARCH
-    platforms:
-      - linux/arm64
-      - linux/amd64
-
-- name: manifest-latest
-  image: plugins/manifest
-  settings:
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    target: linutux/unbound:latest
-    template: linutux/unbound:1.9.0-OS-ARCH
-    platforms:
-      - linux/arm64
-      - linux/amd64
-
-depends_on:
-- default-arm64
-- default-amd64
 ---
 kind: signature
-hmac: c3384e5659a59ac6d5f6345f832786146254a6737c8e2206ee87e1ddcba05558
+hmac: 24b51d41f2436eb297f3fb9bc0ce217434a068416d87080f8c2d236c8984b01c
 
 ...
