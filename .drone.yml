@@ -14,6 +14,7 @@ steps:
   - "apt-get update"
   - "APPVERSION=$(apt-cache policy | sed -n -e 's/^.*Candidate: //p' | cut -d'-' -f1 | tr -d '\n')"
   - "echo $APPVERSION,latest > .tags"
+  - "cat .tags"
 - name: build
   image: plugins/docker
   settings:
@@ -31,6 +32,6 @@ trigger:
   - push
 ---
 kind: signature
-hmac: 4898e0f0adddaaf31f4aa335a300fc78b51a57e45b6d381d84ead94813b1aa06
+hmac: 036202ce63ae99bcfa4aeb0c789782a3206beb163e31e432124586c047a6f073
 
 ...
