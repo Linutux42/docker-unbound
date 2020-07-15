@@ -12,7 +12,7 @@ steps:
   image: debian:buster-slim
   commands:
   - "apt-get update"
-  - "APPVERSION=`apt-cache policy | sed -n -e 's/^.*Candidate: //p' | cut -d'-' -f1 | tr -d'\n'`"
+  - "APPVERSION=$(apt-cache policy | sed -n -e 's/^.*Candidate: //p' | cut -d'-' -f1 | tr -d '\n')"
   - "echo $APPVERSION,latest > .tags"
 - name: build
   image: plugins/docker
@@ -31,6 +31,6 @@ trigger:
   - push
 ---
 kind: signature
-hmac: 36982c1f991e96255cb1d931706d2437d67ab3259a4177122de14c285d279a54
+hmac: 4898e0f0adddaaf31f4aa335a300fc78b51a57e45b6d381d84ead94813b1aa06
 
 ...
