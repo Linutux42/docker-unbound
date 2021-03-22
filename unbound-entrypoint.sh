@@ -9,9 +9,7 @@ PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin"
 _disconad="https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt"
 _discontrack="https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt"
 _hostfiles="https://hosts-file.net/ad_servers.txt"
-_malwaredom="https://mirror1.malwaredomains.com/files/justdomains"
-_stevenblack="https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
-_zeustracker="https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist"
+_stevenblack="https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts"
 
 # Root hints from internic
 _roothints="https://www.internic.net/domain/named.root"
@@ -39,12 +37,6 @@ function simpleParse {
 
 # Make sure folder unbound.conf.d exists
 [[ ! -d "${_basedir}/unbound.conf.d" ]] && mkdir ${_basedir}/unbound.conf.d
-
-# Parse MalwareDom
-[[ -n ${_malwaredom+x} ]] && simpleParse $_malwaredom $_tmpfile
-
-# Parse ZeusTracker
-[[ -n ${_zeustracker+x} ]] && simpleParse $_zeustracker $_tmpfile
 
 # Parse DisconTrack
 [[ -n ${_discontrack+x} ]] && simpleParse $_discontrack $_tmpfile
