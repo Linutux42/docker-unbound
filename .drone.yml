@@ -9,7 +9,7 @@ platform:
 
 steps:
 - name: get-version
-  image: debian:buster-slim
+  image: debian:bullseye-slim
   commands:
   - "apt-get update"
   - "APPVERSION=$(apt-cache policy unbound | sed -n -e 's/^.*Candidate: //p' | cut -d'-' -f1 | tr -d '\n')"
