@@ -19,7 +19,7 @@ jobs:
       run: |
         apt-get update
         APPVERSION=$(apt-cache policy unbound | sed -n -e 's/^.*Candidate: //p' | cut -d'-' -f1 | tr -d '\n')
-        echo "APPVERRSION=${APPVERSION}" >> $GITHUB_OUTPUT
+        echo "APPVERSION=${APPVERSION}" >> $GITHUB_OUTPUT
 
   build:
     runs-on: ubuntu-latest
