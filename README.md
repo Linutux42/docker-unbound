@@ -1,1 +1,1 @@
-[![Docker Repository on Quay](https://quay.io/repository/linutux/unbound/status "Docker Repository on Quay")](https://quay.io/repository/linutux/unbound)
+[![Build/Publish Image](https://github.com/Linutux42/docker-unbound/actions/workflows/build_push.yml/badge.svg)](https://github.com/Linutux42/docker-unbound/actions/workflows/build_push.yml)
