@@ -11,8 +11,11 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+
       - name: Run Hadolint
-        uses: hadolint/hadolint-action@v3.0.0
+        uses: hadolint/hadolint-action@v3.1.0
 
   get-version:
     runs-on: ubuntu-latest
