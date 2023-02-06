@@ -1,0 +1,52 @@
+name: Build/Publish Image
+
+on:
+  push:
+    branches:
+      - "main"
+  schedule:
+    - cron: "0 10 * * SUN"
+
+jobs:
+  get-version:
+    runs-on: ubuntu-latest
+    container: debian:bullseye-slim
+    outputs:
+      appversion: ${{ steps.get-version.outputs.APPVERSION }}
+    steps:
+    - name: Get version
+      id: get-version
+      run: |
+        - apt-get update
+        - APPVERSION=$(apt-cache policy unbound | sed -n -e 's/^.*Candidate: //p' | cut -d'-' -f1 | tr -d '\n')
+        - echo "APPVERRSION=${APPVERSION}" >> $GITHUB_OUTPUT
+
+  build:
+    runs-on: ubuntu-latest
+    needs: get-version
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v3
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Login to Quay.io
+      uses: docker/login-action@v2
+      with:
+        registry: quay.io
+        username: ${{ secrets.QUAY_USERNAME }}
+        password: ${{ secrets.QUAY_PASSWORD }}
+
+    - name: Build and push
+      uses:  docker/build-push-action@v4
+      with:
+        context: .
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags: |
+          linutux/unbound:${{ needs.get-version.outputs.APPVERSION }}
+          linutux/unbound:latest
