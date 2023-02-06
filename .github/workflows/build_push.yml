@@ -8,6 +8,14 @@ on:
     - cron: "0 10 * * SUN"
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Hadolint
+        uses: hadolint/hadolint-action@v3.0.0
+        with:
+          dockerfile: Dockerfile
+
   get-version:
     runs-on: ubuntu-latest
     container: debian:bullseye-slim
