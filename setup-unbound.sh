@@ -17,7 +17,7 @@ _roothints="https://www.internic.net/domain/named.root"
 # Global variables
 _tmpfile="$(mktemp)" && echo '' > $_tmpfile
 _basedir="/etc/unbound"
-_unboundconf="${_basedir}/unbound.conf.d/unbound-adhosts.conf"
+_unboundconf="${_basedir}/unbound.conf.d/adhosts.conf"
 
 function _print_status {
   if [ "${1}" -eq "0" ]; then
@@ -79,11 +79,13 @@ _print_status "${?}"
 
 # Update DNSSEC root key
 echo -n "Downloading root anchors ... "
-unbound-anchor -v
+unbound-anchor -4 -v
 _print_status "${?}"
 
-# Start unbound
-/usr/sbin/unbound -d -v -c /etc/unbound/unbound.conf
+# Remove remote control keys and certs
+echo -n "Removing unbound remote control keys and certificates ... "
+rm -f /etc/unbound/unbound_*.{key,pem}
+_print_status "${?}"
 
 exit ${?}
 #EOF
