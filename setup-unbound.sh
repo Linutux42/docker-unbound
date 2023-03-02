@@ -8,7 +8,6 @@ PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin"
 # Available blocklists - comment line to disable blocklist
 _disconad="https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt"
 _discontrack="https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt"
-_hostfiles="https://hosts-file.net/ad_servers.txt"
 _stevenblack="https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts"
 
 # Root hints from internic
@@ -30,7 +29,7 @@ function _print_status {
 # Remove comments from blocklist
 function simpleParse {
   echo "Downloading and parsing ${1} ... "
-  curl -s $1 | \
+  curl -w "\n" -s $1 | \
   sed -e 's/#.*$//' -e '/^[[:space:]]*$/d' >> $2
   _print_status "${?}"
 }
@@ -47,19 +46,10 @@ function simpleParse {
 # Parse StevenBlack
 [[ -n ${_stevenblack+x} ]] && \
   echo "Downloading and parsing ${_stevenblack} ... " && \
-  curl -s $_stevenblack | \
+  curl -w "\n" -s $_stevenblack | \
   sed -n '/Start/,$p' | \
   sed -e 's/#.*$//' -e '/^[[:space:]]*$/d' | \
   awk '/^0.0.0.0/ { print $2 }' >> $_tmpfile && \
-  _print_status "${?}"
-
-# Parse hpHosts
-[[ -n ${_hostfiles+x} ]] && \
-  echo "Downloading and parsing ${_hostfiles} ... " && \
-  curl -s $_hostfiles | \
-  sed -n '/START/,$p' | tr -d '^M$' | \
-  sed -e 's/#.*$//' -e '/^[[:space:]]*$/d' -e 's/$//' | \
-  awk '/^127.0.0.1/ { print $2 }' >> $_tmpfile && \
   _print_status "${?}"
 
 # Create unbound(8) local zone file
