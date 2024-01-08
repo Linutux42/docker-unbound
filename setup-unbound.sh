@@ -77,5 +77,10 @@ echo -n "Removing unbound remote control keys and certificates ... "
 rm -f /etc/unbound/unbound_*.{key,pem}
 _print_status "${?}"
 
+# Remove root-auto-trust-anchor-file.conf
+echo -n "Removing unbound root-auto-trust-anchor-file config file ... "
+rm -f /etc/unbound/unbound.conf.d/root-auto-trust-anchor-file.conf
+_print_status "${?}"
+
 exit ${?}
 #EOF
