@@ -2,7 +2,7 @@ FROM debian:stable-slim AS builder
 
 # hadolint ignore=DL3008
 RUN apt-get update\
-  && apt-get install -y unbound curl ca-certificates --no-install-recommends
+  && apt-get install -y unbound unbound-anchor dns-root-data curl ca-certificates --no-install-recommends
 
 COPY setup-unbound.sh /
 RUN bash /setup-unbound.sh
@@ -18,7 +18,7 @@ RUN apt-get update \
 USER unbound
 
 COPY --from=builder --chown=unbound:unbound /etc/unbound/ /etc/unbound/
-COPY --from=builder --chown=unbound:unbound /var/lib/unbound/root.key /var/lib/unbound/root.key
+COPY --from=builder --chown=unbound:unbound /usr/share/dns/root.key /usr/share/dns/root.key
 COPY --chown=unbound:unbound server.conf /etc/unbound/unbound.conf.d/server.conf
 
 ENTRYPOINT ["/usr/sbin/unbound", "-d", "-v", "-p"]
