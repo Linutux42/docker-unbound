@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim AS builder
+FROM debian:stable-slim AS builder
 
 # hadolint ignore=DL3008
 RUN apt-get update\
@@ -7,7 +7,7 @@ RUN apt-get update\
 COPY setup-unbound.sh /
 RUN bash /setup-unbound.sh
 
-FROM debian:bullseye-slim AS final
+FROM debian:stable-slim AS final
 
 # hadolint ignore=DL3008
 RUN apt-get update \
